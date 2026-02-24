@@ -1,5 +1,3 @@
-
-
 var canvas = document.getElementById('Farbquadrat');
  if(canvas.getContext){
     var ctx = canvas.getContext('2d');
@@ -27,4 +25,5 @@ document.getElementById('blau').oninput = function(){
 	bleu=parseInt(blau.value);
     zeichne();
 }
+
 

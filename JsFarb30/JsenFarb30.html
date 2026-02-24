@@ -1,0 +1,44 @@
+<!DOCTYPE html> 
+<html lang="de">
+ <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/pics/acht01.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/formate.css" type="text/css">
+  <title>Color editor
+  </title>
+ </head>
+ <body>
+   <a href="/engel01.html"><h2>Home</h2></a>
+  <div style="text-align:center">
+   <canvas id="Farbquadrat" width="256" height="256">
+   </canvas>
+   <br>
+   <label for="rot">
+    <svg style="width:20px; height:20px;">
+     <rect x="0"   y="0" width="16" height="16" fill="rgb(255,0,0)"/>
+    </svg>
+   </label>
+   <input id="rot" type="range" min="0" max="255" value="0"><br>
+   <label for="gruen">
+    <svg style="width:20px; height:20px;">
+     <rect x="0"   y="0" width="16" height="16" fill="rgb(0,255,0)"/>
+    </svg>
+   </label>
+   <input id="gruen" type="range" min="0" max="255" value="0"><br>
+   <label for="blau">
+    <svg style="width:20px; height:20px;">
+     <rect x="0"   y="0" width="16" height="16" fill="rgb(0,0,255)"/>
+    </svg>
+   </label>
+   <input id="blau" type="range" min="0" max="255" value="0">
+   <br>
+   <br>
+   <a href="JsFarb30-Code-01.png">Javascript-Code</a>
+  </div>
+<script src="JsFarb30.js"></script>
+<script>
+zeichne();
+</script>
+</body>
+</html>

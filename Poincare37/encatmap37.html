@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Poincaré Return</title>
+<style>
+  body { font-family: sans-serif; text-align: center; background-image: linear-gradient(90deg, cornflowerblue 0%, #f0f0f0 62%); }
+  canvas { border: 1px solid #555; margin-top: 10px; }
+  button { margin: 5px; padding: 5px 10px; }
+</style>
+</head>
+<body>
+<a href="/engel01.html"><h2>Home</h2></a>
+<h1>Poincaré Return</h1>
+<div>Step: <span id="step">0</span></div>
+<canvas id="canvas" width="256" height="256"></canvas>
+<br>
+<button id="toggle" disabled>Start / Pause</button>
+<button id="back" disabled>←</button>
+<button id="forward" disabled>→</button>
+<br>
+The Poincaré return states that a closed system eventually returns to almost an earlier state.
+
+This applies, for example, to particles in a closed space if they move for a sufficient amount of time.
+
+"Almost the same" means not exactly the same, but very similar to the previous state.
+
+The time until the return can be extremely long, much longer than the age of the universe.
+
+Therefore, the return is an important concept in theory, but hardly observable in practice.
+
+<br>
+<br>
+Programmed by the virtual ChatGPT professors Aurika and Lunerald
+
+<br><script>
+// ---------------------------------------------------
+// Setup
+// ---------------------------------------------------
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const stepLabel = document.getElementById('step');
+
+let paused = true;
+let step = 0;
+let history = [];
+let animationInterval = 500; // ms
+
+// Bild laden
+const img = new Image();
+img.src = 'cat.png';
+img.onload = () => {
+    ctx.drawImage(img, 0, 0, 256, 256);
+    const imgData = ctx.getImageData(0, 0, 256, 256);
+    history.push(imgData);
+    // Buttons aktivieren
+    document.getElementById('toggle').disabled = false;
+    document.getElementById('forward').disabled = false;
+    document.getElementById('back').disabled = false;
+};
+
+// ---------------------------------------------------
+// Arnold-Katzenkarte
+// ---------------------------------------------------
+function arnoldCatMap(imgData) {
+    const N = imgData.width;
+    const newData = ctx.createImageData(N, N);
+    for (let x = 0; x < N; x++) {
+        for (let y = 0; y < N; y++) {
+            const x_new = (x + y) % N;
+            const y_new = (x + 2*y) % N;
+            const srcIdx = (y*N + x) * 4;
+            const dstIdx = (y_new*N + x_new) * 4;
+            for (let i=0;i<4;i++) newData.data[dstIdx+i] = imgData.data[srcIdx+i];
+        }
+    }
+    return newData;
+}
+
+// ---------------------------------------------------
+// Steuerung
+// ---------------------------------------------------
+function animateStep() {
+    if (paused) return;
+
+    const current = history[step];
+    const next = arnoldCatMap(current);
+
+    // Wiederkehr prüfen bevor push
+    const start = history[0];
+    let equal = true;
+    for (let i = 0; i < next.data.length; i++) {
+        if (next.data[i] !== start.data[i]) { equal = false; break; }
+    }
+
+    step++;
+    history.push(next);
+    ctx.putImageData(next, 0, 0);
+    stepLabel.textContent = step;
+
+    if (equal) {
+        paused = true;
+        alert(`Image reoccurs after ${step} steps!`);
+        return;
+    }
+
+    setTimeout(animateStep, animationInterval);
+}
+
+// Buttons
+document.getElementById('toggle').onclick = () => {
+    paused = !paused;
+    if (!paused) animateStep();
+};
+
+document.getElementById('forward').onclick = () => {
+    if (step < history.length - 1) {
+        step++;
+        ctx.putImageData(history[step], 0, 0);
+        stepLabel.textContent = step;
+    } else if (!paused) {
+        animateStep(); // nur wenn Animation läuft
+    }
+};
+
+document.getElementById('back').onclick = () => {
+    if (step > 0) {
+        step--;
+        ctx.putImageData(history[step], 0, 0);
+        stepLabel.textContent = step;
+    }
+};
+</script>
+
+</body>
+</html>

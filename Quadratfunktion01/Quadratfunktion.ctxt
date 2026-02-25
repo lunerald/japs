@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Quadratfunktion
+comment1.params=a\ b\ c
+comment1.target=Quadratfunktion(double,\ double,\ double)
+comment1.text=\n\ Konstruktor\ f\u00FCr\ Objekte\ der\ Klasse\ Quadratfunktion\n
+comment2.params=x
+comment2.target=double\ funktionswertBerechnen(double)
+comment3.params=aNeu\ bNeu\ cNeu
+comment3.target=void\ koeffSetzen(double,\ double,\ double)
+comment4.params=
+comment4.target=void\ anzahlNullstellenBestimmen()
+comment5.params=
+comment5.target=void\ scheitelBestimmen()
+comment6.params=
+comment6.target=void\ nullstellenBerechnen()
+numComments=7

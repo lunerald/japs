@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Zahlen – Schüler-Version</title>
+<style> 
+body { 
+  font-family: system-ui, sans-serif; 
+  background-image: linear-gradient(90deg, cornflowerblue 0%, #f0f0f0 62%);
+  padding: 2rem; 
+} 
+h1, h2 { 
+  font-weight: 500; 
+} 
+.box { 
+  background: white; 
+  padding: 1.5rem; 
+  border-radius: 12px; 
+  max-width: 620px; 
+  margin-bottom: 2rem; 
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1); 
+} 
+label { 
+  display: block; 
+  margin-top: 1rem; 
+  font-weight: 500; 
+} 
+input { 
+  width: 100%; 
+  padding: 0.5rem; 
+  font-size: 1rem; 
+  margin-top: 0.3rem; 
+} 
+.hint { 
+  font-size: 0.9rem; 
+  color: #555; 
+} 
+.mono { 
+  font-family: ui-monospace, monospace; 
+}
+</style>
+</head>
+
+<body>
+ <a href="/index.html"><h2>Home</h2></a>
+<h1>🌼 Zahlen verstehen – Schüler-Version</h1>
+
+<div class="box">
+  <h2>🔢 Zahlensysteme</h2>
+
+  <label for="dec">Dezimal (Basis 10)</label>
+  <input id="dec" name="dec">
+  <div class="hint">So zählen wir im Alltag</div>
+
+  <label for="hex">Hexadezimal (Basis 16)</label>
+  <input id="hex" name="hex">
+  <div class="hint">Kompakt – ideal für Bytes</div>
+
+  <label for="bin">Binär (Basis 2)</label>
+  <input id="bin" name="bin">
+  <div class="hint">Nur 0 und 1 – die Sprache des Computers</div>
+
+  <label for="bingroup">Binär (in Bytes gruppiert)</label>
+  <input id="bingroup" class="mono" readonly name="bingroup">
+  <div class="hint">Jedes 8-Bit = 1 Byte</div>
+</div>
+
+<br>
+Programmiert von den virtuellen ChatGPT-Professoren Aurika und Lunerald
+
+<script>
+const dec = document.getElementById("dec");
+const hex = document.getElementById("hex");
+const bin = document.getElementById("bin");
+const bingroup = document.getElementById("bingroup");
+
+let lock = false;
+
+function groupBinary(bits) { 
+  return bits.replace(/(.{8})/g, "$1 ").trim();
+}
+
+function updateFromDec() { 
+  if (lock) return; 
+  lock = true; 
+  const n = parseInt(dec.value, 10); 
+  if (!isNaN(n)) { 
+    hex.value = n.toString(16).toUpperCase(); 
+    bin.value = n.toString(2); 
+    bingroup.value = groupBinary(bin.value); 
+  } else { 
+    hex.value = bin.value = bingroup.value = ""; 
+  } 
+  lock = false;
+}
+
+function updateFromHex() { 
+  if (lock) return; 
+  lock = true; 
+  const n = parseInt(hex.value, 16); 
+  if (!isNaN(n)) { 
+    dec.value = n; 
+    bin.value = n.toString(2); 
+    bingroup.value = groupBinary(bin.value); 
+  } else { 
+    dec.value = bin.value = bingroup.value = ""; 
+  } 
+  lock = false;
+}
+
+function updateFromBin() { 
+  if (lock) return; 
+  lock = true; 
+  const n = parseInt(bin.value, 2); 
+  if (!isNaN(n)) { 
+    dec.value = n; 
+    hex.value = n.toString(16).toUpperCase(); 
+    bingroup.value = groupBinary(bin.value); 
+  } else { 
+    dec.value = hex.value = bingroup.value = ""; 
+  } 
+  lock = false;
+}
+
+dec.addEventListener("input", updateFromDec);
+hex.addEventListener("input", updateFromHex);
+bin.addEventListener("input", updateFromBin);
+
+// Initiales Update
+updateFromDec();
+</script>
+
+</body>
+</html>

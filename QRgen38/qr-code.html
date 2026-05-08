@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 2rem;
+    }
+    canvas {
+      margin-top: 1rem;
+      border: 1px solid #ddd;
+      padding: 0.5rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>QR Code Generator</h1>
+  <p>Generating QR code for: <code id="text-value"></code></p>
+  <canvas id="qrcode"></canvas>
+
+  <script src="./qrcode.min.js"></script>
+  <script>
+    const text = "https://example.com";
+    document.getElementById("text-value").textContent = text;
+
+    QRCode.toCanvas(
+      document.getElementById("qrcode"),
+      text,
+      { width: 220, margin: 2 },
+      (error) => {
+        if (error) {
+          console.error(error);
+        }
+      }
+    );
+  </script>
+</body>
+</html>

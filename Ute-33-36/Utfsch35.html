@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>UTF-8 Konverter – Synchronisierte Felder</title>
+<style>
+body { font-family: system-ui, sans-serif; background-image: linear-gradient(90deg, cornflowerblue 0%, #f0f0f0 62%);  padding: 2rem; }
+textarea { width: 100%; height: 4.5em; font-family: ui-monospace, monospace; font-size: 1rem; padding: 0.5rem; margin-bottom: 0.5rem; }
+.output { margin-top: 0.5rem; font-size: 1.2rem; background: #eef3ff; padding: 0.5rem; border-radius: 8px; }
+.explosion { margin-top: 2rem; font-family: ui-monospace, monospace; }
+.charblock { display: inline-block; margin: 0.3rem; padding: 0.3rem; border-radius: 10px; background: #e6fcf5; vertical-align: top; }
+.byte { padding: 0.3rem 0.5rem; margin: 0.1rem; border-radius: 6px; display: inline-block; }
+.ascii { background: #d0ebff; }
+.start { background: #b2f2bb; }
+.cont { background: #ffd8a8; }
+.meta { font-size: 0.85rem; margin-top: 0.2rem; color: #333; }
+</style>
+</head>
+<body>
+ <a href="/index.html"><h2>Home</h2></a>
+
+<h1>💥 UTF-8 Live-Konverter</h1>
+
+<h2>Text</h2>
+<textarea id="textField">äöü €</textarea>
+
+<h2>Binär</h2>
+<textarea id="binaryField"></textarea>
+
+<h2>Unicode-Codepoints</h2>
+<textarea id="codepointField"></textarea>
+
+<h2>Explosion (zeichenweise)</h2>
+<div class="explosion" id="explosionOutput"></div>
+<br>
+Programmiert von den virtuellen chatGPT-Professoren Aurika und Lunerald
+
+<script>
+const textField = document.getElementById("textField");
+const binaryField = document.getElementById("binaryField");
+const codepointField = document.getElementById("codepointField");
+
+let ignoreEvent = false; // verhindert Rekursion
+
+function updateAllFromText() {
+  if(ignoreEvent) return;
+  ignoreEvent = true;
+
+  const text = textField.value;
+  const encoder = new TextEncoder();
+  const bytes = encoder.encode(text);
+
+  binaryField.value = [...bytes].map(b=>b.toString(2).padStart(8,'0')).join(' ');
+  codepointField.value = [...text].map(ch=>'U+'+ch.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')).join(' ');
+  explode(bytes);
+
+  ignoreEvent = false;
+}
+
+function updateAllFromBinary() {
+  if(ignoreEvent) return;
+  ignoreEvent = true;
+
+  const bins = binaryField.value.trim().split(/\s+/);
+  const bytes = bins.map(b=>parseInt(b,2)).filter(b=>!isNaN(b));
+  const text = new TextDecoder().decode(new Uint8Array(bytes));
+
+  textField.value = text;
+  codepointField.value = [...text].map(ch=>'U+'+ch.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')).join(' ');
+  explode(bytes);
+
+  ignoreEvent = false;
+}
+
+function updateAllFromCodepoints() {
+  if(ignoreEvent) return;
+  ignoreEvent = true;
+
+  const cps = codepointField.value.trim().split(/\s+/);
+  let text = '';
+  const bytes = [];
+  cps.forEach(cp => {
+    if(cp.startsWith('U+') || cp.startsWith('u+')) cp = cp.slice(2);
+    const code = parseInt(cp,16);
+    if(!isNaN(code)){
+      const ch = String.fromCodePoint(code);
+      text += ch;
+      new TextEncoder().encode(ch).forEach(b=>bytes.push(b));
+    }
+  });
+
+  textField.value = text;
+  binaryField.value = bytes.map(b=>b.toString(2).padStart(8,'0')).join(' ');
+  explode(bytes);
+
+  ignoreEvent = false;
+}
+
+function explode(bytes){
+  let html=''; let i=0;
+  while(i<bytes.length){
+    const b=bytes[i]; let length=1;
+    if((b&0b11110000)===0b11110000) length=4;
+    else if((b&0b11100000)===0b11100000) length=3;
+    else if((b&0b11000000)===0b11000000) length=2;
+    const slice = bytes.slice(i,i+length);
+    const char = new TextDecoder().decode(new Uint8Array(slice));
+    const cp = char.codePointAt(0).toString(16).toUpperCase().padStart(4,'0');
+    html += `<div class="charblock"><strong>${char===' ' ? '␣' : char}</strong><br>`;
+    slice.forEach((byte,idx)=>{
+      const bin = byte.toString(2).padStart(8,'0');
+      const cls = length===1?'ascii':(idx===0?'start':'cont');
+      html += `<span class="byte ${cls}">${bin}<br>${byte}</span>`;
+    });
+    html += `<div class="meta">U+${cp} · ${length} Byte</div></div>`;
+    i+=length;
+  }
+  document.getElementById("explosionOutput").innerHTML=html;
+}
+
+// Event Listener
+textField.addEventListener('input', updateAllFromText);
+binaryField.addEventListener('input', updateAllFromBinary);
+codepointField.addEventListener('input', updateAllFromCodepoints);
+
+// Initial Update
+updateAllFromText();
+</script>
+
+</body>
+</html>

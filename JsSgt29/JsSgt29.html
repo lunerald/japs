@@ -1,0 +1,91 @@
+<!DOCTYPE html> 
+<html lang="de">
+ <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/pics/acht01.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/formate.css" type="text/css">
+  <title>Sternengenerator</title>
+ </head>
+ <body>
+  <a href="/index.html"><h2>Home</h2></a>
+  <div style="text-align: center">
+   <button style="width: 7em; height: 3em" type="button" id="dre">Drehung</button>
+   <button style="width: 7em; height: 3em" type="button" id="aff">Affinität</button>
+  </div>
+  <div style="text-align: center">
+   <canvas id="Sterngen" width="480" height="480"></canvas> 
+  </div>
+
+
+
+  <div style="text-align: center">
+   <form name="menu" method="post">
+    <label for="selgen1" > Ecken 
+    </label>
+    <select id="selgen1" size=1 name="haupt_menu"  onChange="javascript:rebuild_menu(document.menu.haupt_menu.selectedIndex); wert(document.menu.haupt_menu.value,document.menu.sub_menu.value);">
+    </select>
+    <br>
+    <br>
+    <label for="selgen2"> Ordnung </label>
+    <select id="selgen2" style="width: 4em" size=1 name="sub_menu" onChange="wert(document.menu.haupt_menu.value,document.menu.sub_menu.value)">
+    </select>
+   </form> 
+   <br>
+   <br>
+  </div>
+  <div style="text-align: center;">
+   <h3>Farbe außen</h3>
+   <label for="rota">
+    <svg style="width:20px; height:20px;">
+     <rect x="0"   y="0" width="16" height="16" fill="rgb(255,0,0)"/>
+    </svg>
+   </label>
+   <input id="rota" type="range" min="0" max="255" value="0"><br>
+   <label for="gruena">
+    <svg style="width:20px; height:20px;">
+     <rect x="0"   y="0" width="16" height="16" fill="rgb(0,255,0)"/>
+    </svg>
+   </label>
+   <input id="gruena" type="range" min="0" max="255" value="127"><br>
+   <label for="blaua">
+    <svg style="width:20px; height:20px;">
+     <rect x="0"   y="0" width="16" height="16" fill="rgb(0,0,255)"/>
+    </svg>
+   </label>
+   <input id="blaua" type="range" min="0" max="255" value="255">
+   <h3>Farbe innen</h3>
+   <label for="roti">
+    <svg style="width:20px; height:20px;">
+     <rect x="0"   y="0" width="16" height="16" fill="rgb(255,0,0)"/>
+    </svg>
+   </label>
+   <input id="roti" type="range" min="0" max="255" value="255"><br>
+   <label for="grueni">
+    <svg style="width:20px; height:20px;">
+     <rect x="0"   y="0" width="16" height="16" fill="rgb(0,255,0)"/>
+    </svg>
+   </label>
+   <input id="grueni" type="range" min="0" max="255" value="127"><br>
+   <label for="blaui">
+    <svg style="width:20px; height:20px;">
+     <rect x="0"   y="0" width="16" height="16" fill="rgb(0,0,255)"/>
+    </svg>
+   </label>
+   <input id="blaui" type="range" min="0" max="255" value="0">
+   <br>
+   <br>
+   <a href="JsSgt29-Code-01.png">Javascript-Code Teil1</a>
+   <br>
+   <a href="JsSgt29-Code-02.png">Javascript-Code Teil2</a>
+  </div>
+<script src="JsSgt29.js"> 
+</script>
+<script>
+  wert(5,0);
+  haupt_menu();
+  sub_menu(0);
+  renn();
+ </script>
+ </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html> 
+<html>
+ <head>
+<meta charset="utf-8"/>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ <link rel="stylesheet" href="../../formate.css" type="text/css">
+<link rel="icon" href="../../apfel.png" sizes="32x32" />
+ <title>Cromo Nr.1</title>
+ <script type="text/javascript" src="JsSte22.js"></script>
+ </head>
+<body onload="losGehts()" class="bar" >
+
+<div class="zent1">
+<button class="bt5" type="button" id="dre">Drehung</button>
+<button class="bt5" type="button" id="aff">Affinit&auml;t</button>
+</div>
+<div class="zent1">
+
+<canvas id="AnimSte" width="800" height="500"></canvas> 
+
+</div>
+<div style="position:relative; left: calc(50% - 400px); width:450px; height:50px;">
+<button class="bt5" type="button" id="5stern">
+<svg style="width:30px; height:30px;">
+<polygon x="0"   y="0" fill="rgb(0,0,0)" points="15,0 23.8,27.1 0.7,10.3 29.2,10.3 6.2,27.1" />
+</svg>
+</button>
+<button class="bt5" type="button" id="7stern">
+<svg style="width:30px; height:30px;">
+<polygon x="0"   y="0" fill="rgb(0,0,0)" points="15,0 21.5,28.5 3.3,5.6 29.6,18.3 0.4,18.3 26.7,5.6 8.5,28.5" />
+</svg>
+</button>
+<button class="bt5" type="button" id="quadrat">
+<svg style="width:30px; height:30px;">
+<polygon x="0"   y="0" fill="rgb(0,0,0)" points="15,0 30,15 15,30 0,15" />
+</svg>
+</button>
+<button class="bt5" type="button" id="dreieck">
+<svg style="width:30px; height:30px;">
+<polygon x="0"   y="0" fill="rgb(0,0,0)" points="15,0 28,22.5 2,22.5" />
+</svg>
+</button>
+</div>
+<div style="position:relative; left:calc(50% + 50px); top: -50px; width:350px; height:50px;">
+<label for="rot">
+<svg style="width:20px; height:20px;">
+<rect x="0"   y="0" width="16" height="16" fill="rgb(255,0,0)"/>
+</svg>
+ </label>
+<input id="rot" type="range" min="0" max="255" value="0"><br>
+<label for="gruen">
+<svg style="width:20px; height:20px;">
+<rect x="0"   y="0" width="16" height="16" fill="rgb(0,255,0)"/>
+</svg>
+</label>
+<input id="gruen" type="range" min="0" max="255" value="0"><br>
+<label for="blau">
+<svg style="width:20px; height:20px;">
+<rect x="0"   y="0" width="16" height="16" fill="rgb(0,0,255)"/>
+</svg>
+</label>
+<input id="blau" type="range" min="0" max="255" value="0">
+</div>
+
+</body>
+</html>

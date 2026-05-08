@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html lang="de">
+ <head>
+  <title>Mesomerie</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/pics/acht01.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/formate.css" type="text/css">
+ </head>
+ <body>
+  <a href="/index.html"><h2>Home</h2></a>
+  <div style="margin-top: 10%; 
+              text-align: center">
+  
+   Mesomerie von Benzen mit funktionellen Gruppen
+   <br>
+   <canvas style="border: 1px solid black" id="AnimMeso" width="300" height="300">
+   </canvas>
+   <br>
+   <button style="width: 11em; height: 3em" type="button" id="brombenzen">-Br
+   </button>
+   <button style="width: 11em; height: 3em" type="button" id="phenol">-OH
+   </button><br>
+   <button style="width: 11em; height: 3em" type="button" id="phenolat">-O<sup>-</sup>
+   </button>
+   <button style="width: 11em; height: 3em" type="button" id="anilin">-NH<sub>2</sub>
+   </button><br>
+   <button style="width: 11em; height: 3em" type="button" id="nitrobenzen">-NO<sub>2</sub>
+   </button>
+   <button style="width: 11em; height: 3em" type="button" id="benzaldehyd">-CHO
+   </button><br>
+   <button style="width: 11em; height: 3em" type="button" id="stopp">stopp / play
+   </button>
+  </div>
+  <div style="margin-top: 10%; 
+              text-align: center">
+   Mesomerie eines Azofarbstoffes
+   <br> 
+   <canvas style="border: 1px solid black" id="AnimAzo" width="345" height="120">
+   </canvas>
+   <br>
+   <button style="width: 7em; height: 3em" type="button" id="vor">vor
+   </button>
+   <button style="width: 7em; height: 3em" type="button" id="stopp2">stopp
+   </button>
+   <button style="width: 7em; height: 3em" type="button" id="zurueck">zurück
+   </button>
+  </div>
+ <script src="JsMeso18.js">
+ </script>
+ <script src="JsAzo18.js">
+  </script>
+  <script>
+  renn1();
+  renn2();
+  </script> 
+ </body>
+</html>

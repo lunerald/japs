@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Numbers – student version</title>
+<style> 
+body { 
+  font-family: system-ui, sans-serif; 
+  background-image: linear-gradient(90deg, cornflowerblue 0%, #f0f0f0 62%);
+  padding: 2rem; 
+} 
+h1, h2 { 
+  font-weight: 500; 
+} 
+.box { 
+  background: white; 
+  padding: 1.5rem; 
+  border-radius: 12px; 
+  max-width: 620px; 
+  margin-bottom: 2rem; 
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1); 
+} 
+label { 
+  display: block; 
+  margin-top: 1rem; 
+  font-weight: 500; 
+} 
+input { 
+  width: 100%; 
+  padding: 0.5rem; 
+  font-size: 1rem; 
+  margin-top: 0.3rem; 
+} 
+.hint { 
+  font-size: 0.9rem; 
+  color: #555; 
+} 
+.mono { 
+  font-family: ui-monospace, monospace; 
+} 
+.byte { 
+  display: inline-block; 
+  padding: 0.4rem 0.6rem; 
+  margin: 0.3rem; 
+  border-radius: 8px; 
+  background: #eef3ff; 
+} 
+.lead { 
+  background: #cce5ff; 
+} 
+.cont { 
+  background: #d4f5d4; 
+} 
+.bits { 
+  font-family: ui-monospace, monospace; 
+  letter-spacing: 0.05em;
+}
+</style>
+</head>
+
+<body>
+<a href="/engel01.html"><h2>Home</h2></a>
+
+<h1>🌼 Understanding Numbers</h1>
+
+<div class="box">
+  <h2>🔢 Number Systems</h2>
+
+  <label for="dec">Decimal (Base 10)</label>
+  <input id="dec" name="dec">
+  <div class="hint">How We Count in Everyday Life</div>
+
+  <label for="hex">Hexadecimal (Base 16)</label>
+  <input id="hex" name="hex">
+  <div class="hint">Compact – Ideal for Bytes</div>
+
+  <label for="bin">Binary (Base 2)</label>
+  <input id="bin" name="bin">
+  <div class="hint">Only 0 and 1 – The Language of the Computer</div>
+
+  <label for="bingroup">Binary (grouped)</label>
+  <input id="bingroup" class="mono" readonly name="bingroup">
+  <div class="hint">Each 8 bits = 1 byte</div>
+</div>
+
+<br>
+Programmed by the virtual chatGPT professors Aurika and Lunerald
+
+<script>
+const dec = document.getElementById("dec");
+const hex = document.getElementById("hex");
+const bin = document.getElementById("bin");
+const bingroup = document.getElementById("bingroup");
+
+let lock = false;
+
+function groupBinary(bits) { 
+  return bits.replace(/(.{8})/g, "$1 ").trim();
+}
+
+function updateFromDec() { 
+  if (lock) return; 
+  lock = true; 
+  const n = parseInt(dec.value, 10); 
+  if (!isNaN(n)) { 
+    hex.value = n.toString(16).toUpperCase(); 
+    bin.value = n.toString(2); 
+    bingroup.value = groupBinary(bin.value); 
+  } else { 
+    hex.value = bin.value = bingroup.value = ""; 
+  } 
+  lock = false;
+}
+
+function updateFromHex() { 
+  if (lock) return; 
+  lock = true; 
+  const n = parseInt(hex.value, 16); 
+  if (!isNaN(n)) { 
+    dec.value = n; 
+    bin.value = n.toString(2); 
+    bingroup.value = groupBinary(bin.value); 
+  } else { 
+    dec.value = bin.value = bingroup.value = ""; 
+  } 
+  lock = false;
+}
+
+function updateFromBin() { 
+  if (lock) return; 
+  lock = true; 
+  const n = parseInt(bin.value, 2); 
+  if (!isNaN(n)) { 
+    dec.value = n; 
+    hex.value = n.toString(16).toUpperCase(); 
+    bingroup.value = groupBinary(bin.value); 
+  } else { 
+    dec.value = hex.value = bingroup.value = ""; 
+  } 
+  lock = false;
+}
+
+dec.addEventListener("input", updateFromDec);
+hex.addEventListener("input", updateFromHex);
+bin.addEventListener("input", updateFromBin);
+</script>
+
+</body>
+</html>

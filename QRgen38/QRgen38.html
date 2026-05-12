@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>QR-Code Generator</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <!-- script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script-->
+    <script src="./qrcode.min.js"></script>
     <style>
         body {
             background-image: linear-gradient(90deg, cornflowerblue 0%, #f0f0f0 62%);
@@ -27,10 +28,11 @@
     </style>
 </head>
 <body>
-
+ <a href="/index.html"><h1>Home</h1></a>
+<br>
 <h2>QR-Code Generator</h2>
 
-<input type="text" id="urlInput" placeholder="URL eingeben..." />
+<input type="text" id="urlInput" placeholder="URL eingeben...">
 <br><br>
 
 <button onclick="generateQR()">QR-Code erstellen</button>
@@ -67,7 +69,16 @@ function downloadQR() {
     link.download = "qr_code.png";
     link.click();
 }
-</script>
 
+document.getElementById("urlInput")
+.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+        generateQR();
+    }
+});
+</script>
+<br>
+<br>
+Programmiert von den virtuellen ChatGPT-Professoren Aurika und Lunerald
 </body>
 </html>
